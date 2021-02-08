@@ -54,20 +54,25 @@ Your finished project must meet all of the following requirements:
 - [ ] Build an API inside the `api` folder with endpoints for:
 
   - [ ] `[POST] /api/resources`
+
     - Example of response body: `{"resource_id":1,"resource_name":"foo","resource_description":null}`
 
   - [ ] `[GET] /api/resources`
+
     - Example of response body: `[{"resource_id":1,"resource_name":"foo","resource_description":null}]`
 
   - [ ] `[POST] /api/projects`
+
     - Even though `project_completed` is stored as an integer, the API uses booleans when interacting with the client
     - Example of response body: `{"project_id":1,"project_name":"bar","project_description":null,"project_completed":false}`
 
   - [ ] `[GET] /api/projects`
+
     - Even though `project_completed` is stored as an integer, the API uses booleans when interacting with the client
     - Example of response body: `[{"project_id":1,"project_name":"bar","project_description":null,"project_completed":false}]`
 
   - [ ] `[POST] /api/tasks`
+
     - Even though `task_completed` is stored as an integer, the API uses booleans when interacting with the client
     - Example of response body: `{"task_id":1,"task_description":"baz","task_notes":null,"task_completed":false,"project_id:1}`
 
@@ -106,6 +111,11 @@ There are two possible ways to submit this project to Canvas. Lambda Staff will 
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
 
 1. Explain the difference between Relational Databases and SQL.
+   RElational DB is where we store the database structure of columns (tables). SQL is a language for manipulating and querying that data from the RDB. Example knex
 2. Why do tables need a Primary Key?
+   *It helps to join tables
+   *It's an important step to indentify a record for a later reference
 3. What is the name given to a table column that references the Primary Key on another table?
+   \*it is called the foreign key
 4. What do we need in order to have a _many to many_ relationship between two tables?
+5. \*We would need a junction table that can access both primary keys of each table, if we have a table for STUDENTS and CLASSES we would join them by linking them together with a junction table called Students_Classes (studen id and class id inside of it) to link each student id to each class they belong to. Students can belong to many classes and Classes can belong to many students. MANY TO MANY
