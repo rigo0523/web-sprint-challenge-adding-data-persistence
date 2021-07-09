@@ -8,19 +8,11 @@ module.exports = {
 };
 
 function find() {
-  return db("tasks").join(
-    "projects",
-    "projects.project_id",
-    "=",
-    "tasks.project_id"
-  );
+  return db("tasks");
 }
 
 function findById(id) {
-  return db("tasks")
-    .join("projects", "projects.project_id", "=", "tasks.project_id")
-    .where({ task_id: id })
-    .first();
+  return db("tasks").where({ task_id: id }).first();
 }
 
 async function add(newPost) {

@@ -6,13 +6,11 @@ exports.seed = async function (knex) {
     },
     {
       resource_name: "Laptop",
-      resource_description:
-        "In order to study CS at Lambda, I need to get a laptop",
+      resource_description: "In order to study CS at Lambda, I need to get a laptop",
     },
     {
       resource_name: "Condiments",
-      resource_description:
-        "In order to make a taco, we need to buy the ingredients",
+      resource_description: "In order to make a taco, we need to buy the ingredients",
     },
   ]);
 };
