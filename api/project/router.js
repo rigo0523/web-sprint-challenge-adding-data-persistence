@@ -28,7 +28,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-///THIS IS THE ENDPOINT FOR GETTING A LIST OF PROJECT RESOURCES COMBINED
+///THIS IS THE ENDPOINT FOR GETTING A LIST OF PROJECT RESOURCES & TASKS COMBINED
 //GET /api/projects/:id/resources
 router.get("/:id/resources", async (req, res, next) => {
   const { id } = req.params;
@@ -43,12 +43,26 @@ router.get("/:id/resources", async (req, res, next) => {
 ///POST /api/projects
 router.post("/", (req, res, next) => {
   let projectPost = req.body;
-  console.log("projectPost ----> ", Boolean(projectPost.project_completed));
+  console.log(
+    "projectPost ----> ",
+    projectPost,
+    Boolean(projectPost.project_completed)
+  );
 
   ProjectModel.add(projectPost)
     .then((project) => {
       project.project_completed = Boolean(project.project_completed);
       res.status(201).json(project);
+    })
+    .catch((err) => next(err));
+});
+
+//GET /api/projects/:id/tasks
+router.get("/:id/tasks", (req, res, next) => {
+  const { id } = req.params;
+  ProjectModel.getTasks(id)
+    .then((task) => {
+      res.status(200).json(task);
     })
     .catch((err) => next(err));
 });

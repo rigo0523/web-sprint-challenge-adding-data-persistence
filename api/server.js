@@ -8,6 +8,7 @@ const projectRouter = require("../api/project/router");
 const resourceRouter = require("../api/resource/router");
 const taskRouter = require("../api/task/router");
 
+//global middleware
 server.use(helmet());
 server.use(express.json());
 
@@ -15,7 +16,7 @@ server.use(express.json());
 server.use("/api/projects", projectRouter);
 //GET /api/resources
 server.use("/api/resources", resourceRouter);
-//GET /api/tasks
+//GET /api/tasks - includes all projects and resources combined
 server.use("/api/tasks", taskRouter);
 
 //Welcome Page
