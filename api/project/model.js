@@ -7,19 +7,18 @@ module.exports = {
   findProjectsResources,
   add,
 };
+
+//GET /api/projects
 function find() {
-  return db("projects").select(
-    "project_id",
-    "project_name",
-    "project_description",
-    "project_completed"
-  );
+  return db("projects").select("*");
 }
 
+//GET /api/pojects/:id
 function findById(id) {
-  return db("projects").where({ id }).first();
+  return db("projects").where({ project_id: id }).first();
 }
 
+//GET /api/pojects/:id/rersources
 function findProjectsResources(id) {
   return db("projects_resources")
     .select(
@@ -39,6 +38,7 @@ function findProjectsResources(id) {
     .where("projects.id", id);
 }
 
+//POST /api/projects
 function add(project) {
   return db("projects")
     .insert(project, "id")

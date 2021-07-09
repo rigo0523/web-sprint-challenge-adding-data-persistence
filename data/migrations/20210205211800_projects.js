@@ -26,6 +26,7 @@ exports.up = async function (knex) {
       .onUpdate("CASCADE");
   });
 
+  //GET api/pojects/:id/resources
   await knex.schema.createTable("project_resources", (tbl) => {
     tbl
       .integer("project_id")
