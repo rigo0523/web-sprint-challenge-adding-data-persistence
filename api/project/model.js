@@ -46,3 +46,7 @@ function add(project) {
       return db("projects").where({ project_id: ids }).first();
     });
 }
+
+//UPDATE /api/projects/:id
+
+//DELETE /api/pojects/:id
