@@ -7,6 +7,7 @@ module.exports = {
   findProjectsResources,
   add,
   getTasks,
+  newResource,
 };
 
 //GET /api/projects
@@ -45,11 +46,23 @@ function add(project) {
     });
 }
 
-
 //GET /api/projects/:id/tasks
 function getTasks(id) {
   return db("tasks")
     .where("tasks.project_id", id)
     .join("projects", "projects.project_id", "tasks.project_id")
     .select("projects.*", "tasks.*");
+}
+
+//POST /api/projects/:id/resources
+function newResource(data, projectID) {
+  return db("resources")
+    .insert(data)
+    .then((ids) => {
+      console.log(ids, "ids----->");
+      return db("project_resources").insert({
+        resource_id: ids,
+        project_id: projectID,
+      });
+    });
 }
