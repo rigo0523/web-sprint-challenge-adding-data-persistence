@@ -1,6 +1,5 @@
 // build your `/api/projects` router here
 const express = require("express");
-
 const router = express.Router();
 
 const ProjectModel = require("./model");
@@ -28,12 +27,16 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-///THIS IS THE ENDPOINT FOR GETTING A LIST OF PROJECT RESOURCES & TASKS COMBINED
+///THIS IS THE ENDPOINT FOR GETTING A LIST OF PROJECT RESOURCES COMBINED
 //GET /api/projects/:id/resources
 router.get("/:id/resources", async (req, res, next) => {
   const { id } = req.params;
   try {
     const projects = await ProjectModel.findProjectsResources(id);
+    projects.map((projects) => {
+      projects.project_completed = Boolean(projects.project_completed);
+    });
+    console.log("projects----->", projects);
     res.status(200).json(projects);
   } catch (err) {
     next(err);
@@ -43,11 +46,7 @@ router.get("/:id/resources", async (req, res, next) => {
 ///POST /api/projects
 router.post("/", (req, res, next) => {
   let projectPost = req.body;
-  console.log(
-    "projectPost ----> ",
-    projectPost,
-    Boolean(projectPost.project_completed)
-  );
+  console.log("projectPost ----> ", Boolean(projectPost.project_completed));
 
   ProjectModel.add(projectPost)
     .then((project) => {
@@ -57,12 +56,17 @@ router.post("/", (req, res, next) => {
     .catch((err) => next(err));
 });
 
-//GET /api/projects/:id/tasks
-router.get("/:id/tasks", (req, res, next) => {
-  const { id } = req.params;
-  ProjectModel.getTasks(id)
-    .then((task) => {
-      res.status(200).json(task);
+//POST api/projects/:id/resources
+router.post("/:id/resources", (req, res, next) => {
+  const resource = {
+    resource_name: req.body.resource_name,
+    resource_description: req.body.resource_description,
+  };
+
+  ProjectModel.newResource(resource, req.params.id)
+    .then((resource) => {
+      console.log("-------------------->", resource);
+      res.json(resource);
     })
     .catch((err) => next(err));
 });
