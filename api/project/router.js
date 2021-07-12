@@ -71,4 +71,32 @@ router.post("/:id/resources", (req, res, next) => {
     .catch((err) => next(err));
 });
 
+//GET api/projects/:id/tasks
+router.get("/:id/tasks", (req, res, next) => {
+  const { id } = req.params;
+  ProjectModel.getTasks(id)
+    .then((task) => {
+      res.json(task);
+    })
+    .catch((err) => next(err));
+});
+
+//POST /api/projects/:id/tasks
+router.post("/:id/tasks", (req, res, next) => {
+  const { id } = req.params;
+  const taskPost = {
+    task_description: req.body.task_description,
+    task_notes: req.body.task_notes,
+    task_completed: req.body.task_completed,
+    project_id: id,
+  };
+
+  console.log("postTask----->", taskPost, id);
+  ProjectModel.postTask(taskPost)
+    .then((task) => {
+      res.json(task);
+    })
+    .catch((err) => next(err));
+});
+
 module.exports = router;
