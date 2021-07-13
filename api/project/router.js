@@ -87,8 +87,8 @@ router.post("/:id/tasks", (req, res, next) => {
   const taskPost = {
     task_description: req.body.task_description,
     task_notes: req.body.task_notes,
-    task_completed: req.body.task_completed,
-    project_id: id,
+    task_completed: Boolean(req.body.task_completed),
+    project_id: Number(id),
   };
 
   console.log("postTask----->", taskPost, id);
