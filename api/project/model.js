@@ -40,11 +40,7 @@ function getTasks(id) {
 
 //POST /api/projects/:id/tasks
 function postTask(data) {
-  return db("tasks")
-    .insert(data, "ids")
-    .then((ids) => {
-      return db("tasks").where("tasks.project_id", ids);
-    });
+  return db("tasks").insert(data, "ids");
 }
 
 //GET /api/pojects/:id/rersources --->
