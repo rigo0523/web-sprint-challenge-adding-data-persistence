@@ -8,6 +8,7 @@ module.exports = {
   add,
   getTasks,
   newResource,
+  postTask,
 };
 
 //GET /api/projects
@@ -20,7 +21,33 @@ function findById(id) {
   return db("projects").where({ project_id: id }).first();
 }
 
-//GET /api/pojects/:id/rersources ---> i
+//POST /api/projects
+function add(project) {
+  return db("projects")
+    .insert(project, "id")
+    .then((ids) => {
+      return db("projects").where({ project_id: ids }).first();
+    });
+}
+
+//GET /api/projects/:id/tasks
+function getTasks(id) {
+  return db("tasks")
+    .join("projects", "projects.project_id", "tasks.project_id")
+    .select("projects.*", "tasks.*")
+    .where("tasks.project_id", id);
+}
+
+//POST /api/projects/:id/tasks
+function postTask(data) {
+  return db("tasks")
+    .insert(data, "ids")
+    .then((ids) => {
+      return db("tasks").where("tasks.project_id", ids);
+    });
+}
+
+//GET /api/pojects/:id/rersources --->
 function findProjectsResources(id) {
   return db("project_resources")
     .join("projects", "projects.project_id", "project_resources.project_id")
@@ -37,29 +64,12 @@ function findProjectsResources(id) {
     .where("projects.project_id", id);
 }
 
-//POST /api/projects
-function add(project) {
-  return db("projects")
-    .insert(project, "id")
-    .then((ids) => {
-      return db("projects").where({ project_id: ids }).first();
-    });
-}
-
-//GET /api/projects/:id/tasks
-function getTasks(id) {
-  return db("tasks")
-    .where("tasks.project_id", id)
-    .join("projects", "projects.project_id", "tasks.project_id")
-    .select("projects.*", "tasks.*");
-}
-
 //POST /api/projects/:id/resources
 function newResource(data, projectID) {
   return db("resources")
     .insert(data)
     .then((ids) => {
-      console.log(ids, "ids----->");
+      console.log(ids, "ids----->", "projectID---->", projectID);
       return db("project_resources").insert({
         resource_id: ids,
         project_id: projectID,
